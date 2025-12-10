@@ -1,0 +1,151 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
+
+:root {
+  --bg-deep: #020204;
+  --bg-surface: rgba(255, 255, 255, 0.03);
+  
+  --accent-primary: #ffaa00; 
+  --accent-glow: rgba(255, 170, 0, 0.15);
+  
+  --border-subtle: rgba(255, 255, 255, 0.06);
+  
+  --text-main: #ededed;
+  --text-muted: #888888;
+
+  --font-family: 'Inter', system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+}
+
+body {
+  background-color: var(--bg-deep);
+  color: var(--text-main);
+  background: linear-gradient(to bottom, #020204 0%, #0a0a10 100%);
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* --- PrimeReact Overrides --- */
+
+.glass-panel {
+  background: rgba(20, 20, 23, 0.25) !important;
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid var(--border-subtle) !important;
+  border-radius: 12px !important;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+}
+.gem-button {
+  /* 1. Don't use transparency. Use a gradient to fake depth. */
+  background: linear-gradient(
+    135deg, 
+    rgba(255, 187, 0, 1) 0%,   /* Bright Gold Top-Left */
+    rgba(255, 150, 0, 1) 100%  /* Deep Amber Bottom-Right */
+  ) !important;
+  
+  /* 2. Text needs to be dark for contrast against gold */
+  color: #1a1000 !important;
+  font-weight: 800 !important;
+  
+  /* 3. The "Glass" Edges - Highlighting the top/left border */
+  border: 1px solid rgba(255, 255, 255, 0.4) !important;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1) !important;
+  
+  /* 4. The Glow - Instead of a shadow, cast a colored light */
+  box-shadow: 
+    0 4px 15px rgba(255, 170, 0, 0.3), /* Outer Glow */
+    inset 0 1px 0 rgba(255, 255, 255, 0.4) !important; /* Inner Shine */
+    
+  transition: all 0.2s ease !important;
+}
+
+.gem-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 
+    0 8px 25px rgba(255, 170, 0, 0.5),
+    inset 0 1px 0 rgba(255, 255, 255, 0.6) !important;
+  filter: brightness(1.1);
+}
+
+.gem-button:active {
+  transform: translateY(0);
+  filter: brightness(0.95);
+}
+
+.p-panel { background: transparent !important; border: none !important; }
+.p-panel .p-panel-header { background: transparent !important; border: none !important; padding: 1.5rem !important; }
+.p-panel .p-panel-content { background: transparent !important; border: none !important; padding: 0 1.5rem 1.5rem !important; }
+
+.code-editor-input {
+  background-color: rgba(0, 0, 0, 0.4) !important;
+  border: 1px solid var(--border-subtle) !important;
+  color: #d4d4d4 !important;
+  font-family: var(--font-mono) !important;
+  font-size: 0.9rem !important;
+  line-height: 1.5;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.code-editor-input:focus {
+  border-color: var(--accent-primary) !important;
+  box-shadow: 0 0 0 1px var(--accent-primary) !important;
+}
+
+.p-button { font-family: var(--font-family); font-weight: 600; border-radius: 8px !important; }
+.p-button.p-button-text { color: var(--text-muted) !important; }
+.p-button.p-button-text:hover { color: var(--text-main) !important; background: rgba(255,255,255,0.05) !important; }
+
+::-webkit-scrollbar { width: 8px; height: 8px; }
+::-webkit-scrollbar-track { background: #0a0a0a; }
+::-webkit-scrollbar-thumb { background: #333; border-radius: 4px; }
+::-webkit-scrollbar-thumb:hover { background: #444; }
+
+/* --- BACKGROUND ANIMATIONS --- */
+
+/* 1. Twinkling Stars */
+@keyframes twinkle {
+  0%, 100% { opacity: 0.3; transform: scale(0.8); }
+  50% { opacity: 1; transform: scale(1.2); }
+}
+
+.star {
+  position: absolute;
+  background: white;
+  border-radius: 50%;
+  animation: twinkle var(--duration) ease-in-out infinite;
+  animation-delay: var(--delay);
+}
+.star.gold { background: var(--accent-primary); box-shadow: 0 0 4px var(--accent-primary); }
+
+/* 2. Slow Floating Orbs (For Glass Effect) */
+@keyframes float-orb {
+  0% { transform: translate(0, 0) scale(1); }
+  33% { transform: translate(50px, -30px) scale(1.1); }
+  66% { transform: translate(-20px, 40px) scale(0.9); }
+  100% { transform: translate(0, 0) scale(1); }
+}
+
+.bg-orb {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(80px); /* Heavy blur makes them act like ambient light */
+  opacity: 0.15; /* Subtle enough not to look dirty */
+  z-index: -1;
+  animation: float-orb 20s infinite ease-in-out alternate;
+}
+
+@keyframes meteor {
+  0% { transform: rotate(-45deg) translateX(0); opacity: 0; }
+  10% { opacity: 1; }
+  100% { transform: rotate(-45deg) translateX(1000px); opacity: 0; }
+}
+
+.meteor {
+  position: absolute;
+  height: 4px;
+  background: linear-gradient(90deg, rgba(255,255,255,0), rgba(255,255,255,1));
+  opacity: 0;
+  transform: rotate(-45deg);
+  animation: meteor var(--duration) linear infinite;
+  animation-delay: var(--delay);
+  width: var(--length);
+}
