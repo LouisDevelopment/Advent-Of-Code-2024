@@ -1,0 +1,10 @@
+[package]
+name = "aoc-core"
+version = "0.1.0"
+edition = "2024"
+
+[lib]
+crate-type = ["cdylib"] # Crucial: tells Rust to build a .wasm file
+
+[dependencies]
+wasm-bindgen = "0.2" # The magic glue that connects Rust to JS
