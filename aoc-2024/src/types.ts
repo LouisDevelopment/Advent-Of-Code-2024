@@ -8,14 +8,14 @@ export interface DayChallenge {
 
 export const generateDays = (): DayChallenge[] => {
     const days: DayChallenge[] = [];
-    const today = new Date();
-    const currentDay = today.getMonth() === 11 ? today.getDate() : 25;
+    //const today = new Date();
+    const currentDay = 4;
 
     for (let i = 1; i <= 25; i++) {
         let status: ChallengeStatus = 'locked';
         if (i <= currentDay) status = 'available';
-        if (i === 1 || i === 2) status = 'solved_complete';
-        if (i === 3) status = 'solved_part1';
+        //if (i === 1 || i === 2) status = 'solved_complete';
+        //if (i === 3) status = 'solved_part1';
 
         days.push({
             dayNumber: i,

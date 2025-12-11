@@ -136,7 +136,6 @@ const PuzzleView: React.FC<Props> = ({ dayNumber, onBack }) => {
                                     <div className="opacity-50 mb-2">$ cargo run --release</div>
                                     <div className="fadein animation-duration-300">
                                         &gt; {output}
-                                        <span className="animate-cursor ml-1">_</span>
                                     </div>
                                 </>
                             ) : (

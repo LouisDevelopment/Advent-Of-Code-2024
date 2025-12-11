@@ -7,4 +7,5 @@ edition = "2024"
 crate-type = ["cdylib"] # Crucial: tells Rust to build a .wasm file
 
 [dependencies]
+regex = "1.12.2"
 wasm-bindgen = "0.2" # The magic glue that connects Rust to JS

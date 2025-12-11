@@ -1,47 +1,28 @@
-use std::collections::HashMap;
 
 pub fn solve(input: &str, part_two: bool) -> String {
-    let mut left = Vec::new();
-    let mut right = Vec::new();
+    
+    input.lines().filter(| line | {
+        let values = line.split_whitespace()
+        .map(|val| val.parse::<i32>().unwrap()).collect::<Vec<i32>>();
+        if is_safe(&values) {
+            return true
+        } else if part_two {
+            for i in 0..values.len() {
+                let mut temp = values.clone();
+                temp.remove(i);
 
-    for line in input.lines() {
-        let mut parts = line.split_whitespace();
-        match (parts.next(), parts.next()) {
-            (Some(l), Some(r)) => {
-                match (l.parse::<i32>(), r.parse::<i32>()) {
-                    (Ok(left_value), Ok(right_value)) => {
-                        left.push(left_value);
-                        right.push(right_value);
-                    },
-                    _ => {}
+                if is_safe(&temp) {
+                    return true
                 }
-            },
-            _ => {}
+            }
         }
-    }
+        false
+    })
+    .count()
+    .to_string()
+}
 
-    if !part_two {
-        left.sort();
-        right.sort();
-
-        let total: i32 = left.iter()
-        .zip(right.iter())
-        .map(|(l, r)| (l-r).abs())
-        .sum();
-
-        return total.to_string();
-    }
-
-    let mut right_map = HashMap::new();
-
-    for key in right {
-        let count = right_map.entry(key).or_insert(0);
-        *count += 1;
-    }
-
-    let total: i32 = left.iter()
-    .map(|value| value * right_map.get(value).unwrap_or(&0))
-    .sum();
-
-    total.to_string()
+fn is_safe(report: &[i32]) -> bool{
+    report.windows(2).all(|val| val[1]-val[0] > 0 && val[1]-val[0] <= 3) || 
+    report.windows(2).all(|val| val[0]-val[1] > 0 && val[0]-val[1] <= 3)
 }
