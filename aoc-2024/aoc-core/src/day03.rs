@@ -1,7 +1,7 @@
 use regex::Regex;
 
 pub fn solve(input: &str, part_two: bool) -> String {
-    let mut re = Regex::new(r"mul\((\d+),(\d+)\)|do\(\)|don't\(\)").unwrap();
+    let re = Regex::new(r"mul\((\d+),(\d+)\)|do\(\)|don't\(\)").unwrap();
 
     let mut total = 0;
     let mut enabled = true;

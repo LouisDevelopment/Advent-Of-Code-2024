@@ -9,7 +9,7 @@ export interface DayChallenge {
 export const generateDays = (): DayChallenge[] => {
     const days: DayChallenge[] = [];
     //const today = new Date();
-    const currentDay = 4;
+    const currentDay = 6;
 
     for (let i = 1; i <= 25; i++) {
         let status: ChallengeStatus = 'locked';

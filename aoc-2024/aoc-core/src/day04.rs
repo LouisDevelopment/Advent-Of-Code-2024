@@ -4,9 +4,10 @@ pub fn solve(input: &str, part_two: bool) -> String {
     if !part_two {
         let target = "xmas";
 
+        let first_char = target.chars().nth(0).unwrap();
         for (r, row) in grid.iter().enumerate() {
             for (c, char) in row.iter().enumerate() {
-                if char.eq_ignore_ascii_case(&target.chars().nth(0).unwrap()) {
+                if char.eq_ignore_ascii_case(&first_char) {
                     total += check_neighbours(&grid, (r, c), (1, target), None) as i32;
                 }
             }
