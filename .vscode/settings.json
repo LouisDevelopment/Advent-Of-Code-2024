@@ -1,5 +1,0 @@
-{
-    "rust-analyzer.linkedProjects": [
-        "aoc-2024/aoc-core/Cargo.toml"
-    ]
-}
