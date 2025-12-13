@@ -11,10 +11,15 @@ jobs:
     permissions:
       contents: read
       deployments: write
+    
+    defaults:
+      run:
+        working-directory: ./aoc-2024
+
     steps:
       - name: Checkout Code
         uses: actions/checkout@v4
-        
+
       - name: Install Rust Toolchain
         uses: dtolnay/rust-toolchain@stable
         with:
@@ -28,16 +33,18 @@ jobs:
         with:
           node-version: '20'
           cache: 'npm'
+          cache-dependency-path: ./aoc-2024/package-lock.json
 
       - name: Install Dependencies
         run: npm ci
 
       - name: Build Project
-        run: npm run Build
+        run: npm run build
 
       - name: Publish to Cloudflare Pages
         uses: cloudflare/wrangler-action@v3
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          workingDirectory: 'aoc-2024'
           command: pages deploy dist --project-name=advent-of-code-2024
